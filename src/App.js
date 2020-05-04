@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import React, { Component } from 'react';
+import Header from './component/Header';
+import AddTask from './component/AddTask';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export default class App extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      list: []
+    }
+  }
+
+  addItem = (t) => {
+    this.setState({list: [{task: t},...this.state.list ]});
+    
+  }
+
+  deleteItem = (index) => {
+
+    let tempTask = this.state.list.filter((element, i) => (i != index ));
+    this.setState({list: tempTask})
+
+  }
+
+  render() {
+    return (
+
+      <div className='App'>
+        <Header logo='About to do' />
+        <div className='app-div'>
+          <AddTask addItem={this.addItem} list={this.state.list} deleteItem={this.deleteItem} />
+
+        </div>
+      </div>
+    )
+  }
 }
-
-export default App;
